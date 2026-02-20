@@ -6,8 +6,7 @@
 
 set -e
 
-REPO_URL="${REPO_URL:-https://github.com/YOUR_USERNAME/opencode-agentsuit.git}"
-TARGET_DIR=".opencode"
+REPO_URL="${REPO_URL:-https://github.com/mscipio/opencode-agentsuit.git}"
 
 # Colors
 RED='\033[0;31m'
@@ -36,25 +35,23 @@ git clone --depth 1 "$REPO_URL" "$TEMP_DIR" 2>/dev/null || {
 }
 
 # Remove existing .opencode if exists
-if [ -d "$TARGET_DIR" ]; then
+if [ -d ".opencode" ]; then
     echo -e "${YELLOW}Removing existing .opencode folder...${NC}"
-    rm -rf "$TARGET_DIR"
+    rm -rf ".opencode"
 fi
 
-# Move to target
-mv "$TEMP_DIR" "$TARGET_DIR"
-echo -e "${GREEN}Moved to .opencode/${NC}"
+# Extract .opencode folder and opencode.json from src/
+mv "$TEMP_DIR/src/.opencode" "./.opencode"
+mv "$TEMP_DIR/src/opencode.json" "./opencode.json"
 
-# Install dependencies if package.json exists
-if [ -f "$TARGET_DIR/package.json" ]; then
-    echo "Installing dependencies..."
-    cd "$TARGET_DIR" && npm install 2>/dev/null || echo -e "${YELLOW}Warning: npm install failed (may not be needed)${NC}"
-fi
+# Clean up temp directory
+rm -rf "$TEMP_DIR"
+echo -e "${GREEN}Extracted .opencode and opencode.json${NC}"
 
 # Create context directory if it doesn't exist
-mkdir -p "$TARGET_DIR/context"
-mkdir -p "$TARGET_DIR/context/history"
-mkdir -p "$TARGET_DIR/context/symbols"
+mkdir -p ".opencode/context"
+mkdir -p ".opencode/context/history"
+mkdir -p ".opencode/context/symbols"
 
 echo -e "${GREEN}✓ Installation complete!${NC}"
 echo ""

@@ -13,21 +13,21 @@ A production-ready multi-agent orchestration framework for AI-driven software de
 
 ```bash
 # Run in your project directory
-curl -sL https://raw.githubusercontent.com/YOUR_USERNAME/opencode-agentsuit/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/mscipio/opencode-agentsuit/main/install.sh | bash
 ```
 
 Or manual:
 
 ```bash
 # Clone this repo
-git clone https://github.com/YOUR_USERNAME/opencode-agentsuit.git .opencode_tmp
+git clone https://github.com/mscipio/opencode-agentsuit.git .opencode_tmp
 
-# Move to .opencode
-rm -rf .opencode
-mv .opencode_tmp .opencode
+# Extract .opencode folder and config to current directory
+mv .opencode_tmp/src/.opencode .
+mv .opencode_tmp/src/opencode.json .
 
-# Install dependencies
-cd .opencode && npm install
+# Clean up
+rm -rf .opencode_tmp
 ```
 
 ## Features
