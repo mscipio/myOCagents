@@ -29,6 +29,12 @@
     "engineer": {
       "description": "Technical implementation - writes code with TDD"
     },
+    "test-engineer": {
+      "description": "Test writing specialist - unit, integration, e2e test creation"
+    },
+    "code-reviewer": {
+      "description": "Code quality review - patterns, security, performance analysis"
+    },
     "task-manager": {
       "description": "Task decomposition - creates execution DAGs"
     },
@@ -43,6 +49,9 @@
     },
     "sentinel": {
       "description": "Security - vulnerability scanning"
+    },
+    "technical-writer": {
+      "description": "Documentation specialist - README, API docs"
     }
   }
 }

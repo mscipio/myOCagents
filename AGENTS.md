@@ -5,12 +5,58 @@ This file provides guidelines for agentic coding agents operating in this reposi
 ## Project Overview
 
 This is the **OpenCode Agent Suit** - a production-ready multi-agent orchestration framework for AI-driven software development. The repository contains:
-- **7 Specialized Agents**: Orchestrator, Engineer, Task Manager, Guardian, Librarian, Beagle, Sentinel
+- **10 Specialized Agents**: Orchestrator, Engineer, TestEngineer, CodeReviewer, Task Manager, Guardian, Librarian, Sentinel, Technical Writer, Beagle
 - **7 Commands**: init-context, sync-context, detect-drift, generate-release, explain-context, revert-milestone
 - **4 Skills**: TokenTracker, AST-Analyzer, CoverageReporter, ParallelExec
 - **4 Lifecycle Hooks**: pre-change, post-checkout, post-sync, on-error
 
 This is a **template/configuration repository** - the "code" is primarily markdown files (agents, skills, commands, hooks), not executable code.
+
+---
+
+## Agent Workflow
+
+The Orchestrator follows this workflow for every user request:
+
+```
+User Request
+     ↓
+Phase 0: Task-Manager (decompose into DAG)
+     ↓
+Phase 1: Librarian (verify context)
+     ↓
+Phase 2: User Approval (plan)
+     ↓
+Phase 3: Engineer + TestEngineer (implementation)
+     ↓
+Phase 3b: Sentinel (security audit) ← MANDATORY
+     ↓
+Phase 4: CodeReviewer (quality review)
+     ↓
+Phase 5: Guardian (coverage + commit)
+     ↓
+Librarian (sync context)
+```
+
+### Agent Responsibilities
+
+| Agent | Mode | Role | Can Invoke Directly? |
+|-------|------|------|---------------------|
+| **Orchestrator** | primary | Strategic lead - manages workflow, approval gates | ✅ Yes |
+| **Sentinel** | primary | Security vulnerability scanning | ✅ Yes |
+| **CodeReviewer** | primary | Quality review, patterns, performance | ✅ Yes |
+| **TestEngineer** | primary | Test writing (unit, integration, e2e) | ✅ Yes |
+| **TechnicalWriter** | primary | Documentation | ✅ Yes |
+| **Beagle** | primary | Research, dependency tracing | ✅ Yes |
+| **Task-Manager** | subagent | Decompose tasks into atomic execution DAGs | ❌ Via Orchestrator |
+| **Librarian** | subagent | Context management, drift detection | ❌ Via Orchestrator |
+| **Engineer** | subagent | Code implementation with TDD | ❌ Via Orchestrator |
+| **Guardian** | subagent | Coverage verification, semantic commits | ❌ Via Orchestrator |
+
+### Approval Gates
+
+1. **Plan Approval** - User must approve task decomposition before execution
+2. **Commit Approval** - User must approve final changes before git commit
 
 ---
 
