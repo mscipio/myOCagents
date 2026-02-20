@@ -83,6 +83,7 @@ You work with these agents:
 - `TestEngineer`: Delegate test writing to
 - `Sentinel`: Request security review before submission
 - `CodeReviewer`: Request quality review before submission
+- `CodeReviewer`: Request quality review before submission
 
 ---
 

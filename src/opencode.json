@@ -1,57 +1,66 @@
 {
-  "$schema": "https://opencode.ai/schema.json",
-  "version": "1.0",
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": true,
+  "instructions": ["./AGENTS.md"],
+  "permission": {
+    "edit": "ask",
+    "write": "ask",
+    "bash": "ask"
+  },
   "skills": {
     "paths": [".opencode/skills"]
   },
   "commands": {
     "init-context": {
-      "template": "Load .opencode/commands/init-context.md and execute the context initialization protocol",
       "agent": "librarian"
     },
     "sync-context": {
-      "template": "Load .opencode/commands/sync-context.md and sync the context vault",
       "agent": "librarian"
     },
     "detect-drift": {
-      "template": "Load .opencode/commands/detect-drift.md and check for external changes",
       "agent": "librarian"
     },
     "generate-release": {
-      "template": "Load .opencode/commands/generate-release.md and prepare release",
       "agent": "guardian"
-    }
-  },
-  "agent": {
-    "orchestrator": {
-      "description": "Strategic lead - manages workflow and delegates to specialized agents"
     },
-    "engineer": {
-      "description": "Technical implementation - writes code with TDD"
+    "security-scan": {
+      "agent": "sentinel"
     },
-    "test-engineer": {
-      "description": "Test writing specialist - unit, integration, e2e test creation"
+    "code-review": {
+      "agent": "code-reviewer"
     },
-    "code-reviewer": {
-      "description": "Code quality review - patterns, security, performance analysis"
+    "run-tests": {
+      "agent": "test-engineer"
     },
-    "task-manager": {
-      "description": "Task decomposition - creates execution DAGs"
+    "refactor": {
+      "agent": "engineer"
     },
-    "guardian": {
-      "description": "Quality assurance - coverage, commits, changelog"
+    "debug": {
+      "agent": "engineer"
     },
-    "librarian": {
-      "description": "Context management - codebase mapping, drift detection"
+    "explain": {
+      "agent": "beagle"
     },
-    "beagle": {
-      "description": "Research - documentation excavation"
+    "migrate": {
+      "agent": "engineer"
     },
-    "sentinel": {
-      "description": "Security - vulnerability scanning"
+    "audit": {
+      "agent": "sentinel"
     },
-    "technical-writer": {
-      "description": "Documentation specialist - README, API docs"
+    "chores": {
+      "agent": "guardian"
+    },
+    "docs": {
+      "agent": "technical-writer"
+    },
+    "tests": {
+      "agent": "test-engineer"
+    },
+    "explain-context": {
+      "agent": "librarian"
+    },
+    "revert-milestone": {
+      "agent": "librarian"
     }
   }
 }

@@ -40,9 +40,10 @@ if [ -d ".opencode" ]; then
     rm -rf ".opencode"
 fi
 
-# Extract .opencode folder and opencode.json from src/
+# Extract .opencode folder, opencode.json, and AGENTS.md from src/
 mv "$TEMP_DIR/src/.opencode" "./.opencode"
 mv "$TEMP_DIR/src/opencode.json" "./opencode.json"
+mv "$TEMP_DIR/src/AGENTS.md" "./AGENTS.md" 2>/dev/null || true
 
 # Clean up temp directory
 rm -rf "$TEMP_DIR"
