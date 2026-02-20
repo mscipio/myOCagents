@@ -4,10 +4,10 @@ A production-ready multi-agent orchestration framework for AI-driven software de
 
 ## What's Included
 
-- **7 Specialized Agents**: Orchestrator, Engineer, Task Manager, Guardian, Librarian, Beagle, Sentinel, Technical Writer
-- **7 Commands**: init-context, sync-context, detect-drift, generate-release, explain-context, revert-milestone
-- **4 Skills**: TokenTracker, AST-Analyzer, CoverageReporter, ParallelExec
-- **4 Lifecycle Hooks**: pre-change, post-checkout, post-sync, on-error
+- **10 Specialized Agents**: Orchestrator, Engineer, TestEngineer, CodeReviewer, TaskManager, Guardian, Librarian, Beagle, Sentinel, TechnicalWriter
+- **17 Commands**: init-context, sync-context, detect-drift, explain-context, revert-milestone, generate-release, security-scan, code-review, run-tests, refactor, debug, explain, migrate, audit, chores, docs, tests
+- **15 Skills**: token-tracker, ast-analyzer, coverage-reporter, parallel-exec, security-scanner, code-analyzer, doc-generator, tdd-workflow, git-helper, git-release, debug-workflow, refactor-workflow, spec-workflow, commit-msg, atdd
+- **6 Lifecycle Hooks**: pre-change, post-change, pre-commit, post-checkout, post-sync, on-error
 
 ## Quick Install
 
@@ -22,9 +22,10 @@ Or manual:
 # Clone this repo
 git clone https://github.com/mscipio/opencode-agentsuit.git .opencode_tmp
 
-# Extract .opencode folder and config to current directory
+# Extract .opencode folder, config, and AGENTS.md to current directory
 mv .opencode_tmp/src/.opencode .
 mv .opencode_tmp/src/opencode.json .
+mv .opencode_tmp/src/AGENTS.md .
 
 # Clean up
 rm -rf .opencode_tmp
@@ -36,8 +37,48 @@ rm -rf .opencode_tmp
 - Human-in-the-loop approval gates
 - Parallel agent execution
 - Security auditing (Sentinel)
+- Code quality review (CodeReviewer)
+- Test generation (TestEngineer)
 - Coverage enforcement (Guardian)
 - Semantic commits & changelog generation
+- Documentation generation (TechnicalWriter)
+- Research & exploration (Beagle)
+
+## Workflow
+
+```
+User Request
+     ↓
+Orchestrator (primary agent)
+     ↓
+Phase 0: Task-Manager → decomposes into DAG
+     ↓
+Phase 1: Librarian → verifies context
+     ↓
+Phase 2: User approves plan
+     ↓
+Phase 3: Engineer + TestEngineer → implementation
+     ↓
+Phase 3b: Sentinel → security audit (MANDATORY)
+     ↓
+Phase 4: CodeReviewer → quality review
+     ↓
+Phase 5: Guardian → coverage + commit
+     ↓
+Librarian → sync context
+```
+
+## Commands
+
+| Category | Commands |
+|----------|----------|
+| Context | init-context, sync-context, detect-drift, explain-context, revert-milestone |
+| Quality | security-scan, audit, code-review |
+| Development | refactor, debug, migrate |
+| Test | run-tests, tests |
+| Docs | docs |
+| Release | generate-release, chores |
+| Research | explain |
 
 ## Requirements
 
