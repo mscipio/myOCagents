@@ -1,0 +1,48 @@
+{
+  "$schema": "https://opencode.ai/schema.json",
+  "version": "1.0",
+  "skills": {
+    "paths": [".opencode/skills"]
+  },
+  "commands": {
+    "init-context": {
+      "template": "Load .opencode/commands/init-context.md and execute the context initialization protocol",
+      "agent": "librarian"
+    },
+    "sync-context": {
+      "template": "Load .opencode/commands/sync-context.md and sync the context vault",
+      "agent": "librarian"
+    },
+    "detect-drift": {
+      "template": "Load .opencode/commands/detect-drift.md and check for external changes",
+      "agent": "librarian"
+    },
+    "generate-release": {
+      "template": "Load .opencode/commands/generate-release.md and prepare release",
+      "agent": "guardian"
+    }
+  },
+  "agent": {
+    "orchestrator": {
+      "description": "Strategic lead - manages workflow and delegates to specialized agents"
+    },
+    "engineer": {
+      "description": "Technical implementation - writes code with TDD"
+    },
+    "task-manager": {
+      "description": "Task decomposition - creates execution DAGs"
+    },
+    "guardian": {
+      "description": "Quality assurance - coverage, commits, changelog"
+    },
+    "librarian": {
+      "description": "Context management - codebase mapping, drift detection"
+    },
+    "beagle": {
+      "description": "Research - documentation excavation"
+    },
+    "sentinel": {
+      "description": "Security - vulnerability scanning"
+    }
+  }
+}
