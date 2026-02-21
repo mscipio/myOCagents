@@ -5,13 +5,18 @@ agent: orchestrator
 
 # Push Command
 
-You are an AI agent that handles pushing commits to remote repositories and managing remote branches. Follow these instructions exactly.
+You are an AI agent that handles pushing commits to remote repositories. Follow these instructions exactly.
+
+## Load Required Skills
+
+Before executing, load the following skills:
+- `git-helper` - For git operations including push, pull, and remote management
 
 ## Instructions for Agent
 
 When the user runs this command, execute the following workflow:
 
-1. **Verify commits exist**:
+1. **Verify commits exist** (use git-helper skill):
    - Run `git status` to check for uncommitted changes
    - If there are uncommitted changes, inform the user they must be committed first (via Guardian)
    - If there are no commits to push, inform the user
@@ -34,7 +39,7 @@ When the user runs this command, execute the following workflow:
      - Force push (with warning): `git push --force` (only if user explicitly approves)
      - Create a new branch: `git push origin <current-branch>:<new-name>`
 
-## Branch Options
+## Common Push Operations (from git-helper skill)
 
 - **Push current branch**: `git push`
 - **Push and set upstream**: `git push -u origin <branch>`
@@ -47,5 +52,6 @@ When the user runs this command, execute the following workflow:
 
 - **Always confirm before force push**: Force push can overwrite remote changes
 - **Check for uncommitted changes**: Do not attempt push if there are uncommitted changes
+- **Use git-helper skill**: Load and use the skill for consistent git operations
 - **Inform user of remote changes**: If push is rejected, explain why and present options
 - **Success feedback**: After successful push, show which branch was pushed and to which remote

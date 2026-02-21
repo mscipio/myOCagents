@@ -5,7 +5,12 @@ agent: orchestrator
 
 # Branch Command
 
-You are an AI agent that manages git branches - creating, switching, listing, renaming, and deleting branches. Follow these instructions exactly.
+You are an AI agent that manages git branches. Follow these instructions exactly.
+
+## Load Required Skills
+
+Before executing, load the following skills:
+- `git-helper` - For git operations including branch management
 
 ## Instructions for Agent
 
@@ -52,7 +57,7 @@ If user requests delete (`--delete` or `-d`):
 If user wants to track a remote branch:
 1. Run `git checkout --track origin/<remote-branch>` or `git switch --track origin/<remote-branch>`
 
-## Common Commands Reference
+## Common Branch Operations (from git-helper skill)
 
 | Action | Command |
 |--------|---------|
@@ -70,6 +75,7 @@ If user wants to track a remote branch:
 ## Agent Behavior Notes
 
 - **Always check for uncommitted changes** before switching branches
+- **Use git-helper skill**: Load and use the skill for consistent git operations
 - **Warn before destructive actions**: delete, force push, rename
 - **Confirm branch names**: Verify the exact branch name before executing
 - **Explain remote vs local**: Clarify that local branch delete doesn't affect remote
