@@ -10,6 +10,10 @@ permission:
     "pnpm test*": allow
     "npm test*": allow
     "npm run test*": allow
+    "git status*": allow
+    "git diff*": allow
+    "git add*": allow
+    "git commit*": allow
   read: allow
   glob: allow
   grep: allow
