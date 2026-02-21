@@ -50,9 +50,9 @@ rm -rf "$TEMP_DIR"
 echo -e "${GREEN}Extracted .opencode and opencode.json${NC}"
 
 # Create context directory if it doesn't exist
-mkdir -p ".opencode/context"
-mkdir -p ".opencode/context/history"
-mkdir -p ".opencode/context/symbols"
+mkdir -p ".context"
+mkdir -p ".context/history"
+mkdir -p ".context/symbols"
 
 echo -e "${GREEN}✓ Installation complete!${NC}"
 echo ""

@@ -6,7 +6,7 @@ This file provides guidelines for agentic coding agents operating in this reposi
 
 This is the **OpenCode Agent Suit** - a production-ready multi-agent orchestration framework for AI-driven software development. The repository contains:
 - **10 Specialized Agents**: Orchestrator, Engineer, TestEngineer, CodeReviewer, Task Manager, Guardian, Librarian, Sentinel, Technical Writer, Beagle
-- **7 Commands**: init-context, sync-context, detect-drift, generate-release, explain-context, revert-milestone
+- **7 Commands**: init-context, sync-context, detect-drift, generate-release, explain-context, revert-milestone, commit, push, branch
 - **4 Skills**: TokenTracker, AST-Analyzer, CoverageReporter, ParallelExec
 - **4 Lifecycle Hooks**: pre-change, post-checkout, post-sync, on-error
 
@@ -35,6 +35,8 @@ Phase 4: CodeReviewer (quality review)
      ↓
 Phase 5: Guardian (coverage + commit)
      ↓
+Orchestrator (git push)
+     ↓
 Librarian (sync context)
 ```
 
@@ -42,7 +44,7 @@ Librarian (sync context)
 
 | Agent | Mode | Role | Can Invoke Directly? |
 |-------|------|------|---------------------|
-| **Orchestrator** | primary | Strategic lead - manages workflow, approval gates | ✅ Yes |
+| **Orchestrator** | primary | Strategic lead - manages workflow, approval gates, git push & branch management | ✅ Yes |
 | **Sentinel** | primary | Security vulnerability scanning | ✅ Yes |
 | **CodeReviewer** | primary | Quality review, patterns, performance | ✅ Yes |
 | **TestEngineer** | primary | Test writing (unit, integration, e2e) | ✅ Yes |
@@ -51,12 +53,13 @@ Librarian (sync context)
 | **Task-Manager** | subagent | Decompose tasks into atomic execution DAGs | ❌ Via Orchestrator |
 | **Librarian** | subagent | Context management, drift detection | ❌ Via Orchestrator |
 | **Engineer** | subagent | Code implementation with TDD | ❌ Via Orchestrator |
-| **Guardian** | subagent | Coverage verification, semantic commits | ❌ Via Orchestrator |
+| **Guardian** | subagent | Coverage verification, commits (local only) | ❌ Via Orchestrator |
 
 ### Approval Gates
 
 1. **Plan Approval** - User must approve task decomposition before execution
-2. **Commit Approval** - User must approve final changes before git commit
+2. **Commit Approval** - User must approve final changes before Guardian commits
+3. **Push Approval** - User must approve before Orchestrator pushes to remote
 
 ---
 
@@ -294,7 +297,7 @@ When agents submit完成任务, use this structure:
 
 ## 3. Context Management
 
-The `.opencode/context/` directory is **auto-generated and must NOT be committed**. It's created at runtime by the Librarian agent:
+The `.context/` directory is **auto-generated and must NOT be committed**. It's created at runtime by the Librarian agent:
 
 ```bash
 opencode init-context  # Creates context directory
@@ -332,9 +335,9 @@ The Orchestrator should decompose tasks into independent sub-tasks and spawn mul
 ## 5. Git Operations
 
 - **Engineer subagents**: NO git operations allowed
-- **Orchestrator**: Handles approval and delegation only
-- **Guardian**: Quality audits and coverage reporting
-- **Commit workflow**: Engineer → Guardian audit → Orchestrator approval → Commit
+- **Orchestrator**: Handles git push, branch management (create, switch, delete)
+- **Guardian**: Quality audits, coverage reporting, commits (local only)
+- **Commit workflow**: Engineer → Guardian audit → Guardian commits → Orchestrator pushes
 
 ---
 
@@ -343,7 +346,7 @@ The Orchestrator should decompose tasks into independent sub-tasks and spawn mul
 This repository follows markdown-based conventions for agentic workflows. Key principles:
 1. **YAML frontmatter required** on all agent/skill files
 2. **Consistent section structure** with `---` separators
-3. **No `.opencode/context/` committed** - auto-generated
+3. **No `.context/` committed** - auto-generated
 4. **Strict approval gates** - no silent writes
 5. **TDD approach** - tests before implementation
 6. **Atomic, scoped changes** - isolated modifications

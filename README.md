@@ -5,7 +5,7 @@ A production-ready multi-agent orchestration framework for AI-driven software de
 ## What's Included
 
 - **10 Specialized Agents**: Orchestrator, Engineer, TestEngineer, CodeReviewer, TaskManager, Guardian, Librarian, Beagle, Sentinel, TechnicalWriter
-- **17 Commands**: init-context, sync-context, detect-drift, explain-context, revert-milestone, generate-release, security-scan, code-review, run-tests, refactor, debug, explain, migrate, audit, chores, docs, tests
+- **20 Commands**: init-context, sync-context, detect-drift, explain-context, revert-milestone, generate-release, security-scan, code-review, run-tests, refactor, debug, explain, migrate, audit, chores, docs, tests, commit, push, branch
 - **15 Skills**: token-tracker, ast-analyzer, coverage-reporter, parallel-exec, security-scanner, code-analyzer, doc-generator, tdd-workflow, git-helper, git-release, debug-workflow, refactor-workflow, spec-workflow, commit-msg, atdd
 - **6 Lifecycle Hooks**: pre-change, post-change, pre-commit, post-checkout, post-sync, on-error
 
@@ -41,6 +41,7 @@ rm -rf .opencode_tmp
 - Test generation (TestEngineer)
 - Coverage enforcement (Guardian)
 - Semantic commits & changelog generation
+- Git push & branch management (Orchestrator)
 - Documentation generation (TechnicalWriter)
 - Research & exploration (Beagle)
 
@@ -65,6 +66,8 @@ Phase 4: CodeReviewer → quality review
      ↓
 Phase 5: Guardian → coverage + commit
      ↓
+Orchestrator → git push
+     ↓
 Librarian → sync context
 ```
 
@@ -74,6 +77,7 @@ Librarian → sync context
 |----------|----------|
 | Context | init-context, sync-context, detect-drift, explain-context, revert-milestone |
 | Quality | security-scan, audit, code-review |
+| Git | commit (Guardian), push (Orchestrator), branch (Orchestrator) |
 | Development | refactor, debug, migrate |
 | Test | run-tests, tests |
 | Docs | docs |
