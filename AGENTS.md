@@ -211,20 +211,16 @@ compatibility: opencode    # For skills only
 │   └── ...
 ├── commands/         # Command definitions
 │   └── init-context.md
-├── hooks/            # Lifecycle hooks
-│   └── pre-change.md
-└── context/         # Auto-generated (NOT committed)
-    ├── map.md
-    └── tech_stack.md
+└── hooks/            # Lifecycle hooks
+    └── pre-change.md
 
-.context/             # Project context (NOT committed)
-├── map.md
-├── tech_stack.md
-└── progress.md
-
-docs/plans/           # Design documents (committed)
-├── 2026-02-21-feature-design.md
-└── 2026-02-21-feature-plan.md
+.context/             # Project context (COMMITTED)
+├── map.md            # Codebase atlas
+├── tech_stack.md     # Framework inventory
+├── progress.md       # Milestone log
+├── plans/            # Design documents
+│   └── YYYY-MM-DD-<topic>-design.md
+└── history/          # Context archives
 
 .worktrees/           # Git worktrees (NOT committed)
 └── feature-branch/
@@ -234,17 +230,42 @@ docs/plans/           # Design documents (committed)
 
 ## 3. Context Management
 
-The `.context/` directory is **auto-generated and must NOT be committed**. It's created at runtime by the Librarian agent:
+The `.context/` directory is **committed to git** and contains valuable project intelligence that should survive agent suit updates and be shared across sessions and team members.
 
 ```bash
 opencode init-context  # Creates context directory
-opencode sync-context  # Updates context after changes
+opencode sync-context  # Updates context after milestones
 ```
 
 ### Context Files
-- `map.md` - Codebase file structure with SHA-256 hashes
-- `tech_stack.md` - Detected frameworks and dependencies
-- `progress.md` - Session milestones and task history
+
+| File | Purpose | Merge Strategy |
+|------|---------|----------------|
+| `map.md` | Codebase file structure with SHA-256 hashes | Re-generate on conflict |
+| `tech_stack.md` | Detected frameworks and dependencies | Manual merge |
+| `progress.md` | Append-only milestone log | Append both sides |
+| `plans/` | Design documents (human-approved) | Normal git workflow |
+| `history/` | Context archives for rollback | Auto-generated |
+
+### Sync Recommendations
+
+**Sync at milestones, not continuously:**
+- After completing a feature
+- Before creating a PR
+- After merging to main
+
+### Context Directory Structure
+
+```
+.context/
+├── map.md           # Codebase atlas (machine-managed)
+├── tech_stack.md    # Framework/library inventory
+├── progress.md      # Append-only milestone log
+├── plans/           # Design documents (human-approved)
+│   └── YYYY-MM-DD-<topic>-design.md
+└── history/         # Context archives for rollback
+    └── YYYY-MM-DD-HHMM/
+```
 
 ---
 

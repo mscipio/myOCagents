@@ -106,8 +106,8 @@ You are an orchestrator, not a solo dev. If a task involves multiple independent
    - Present design sections for approval
 
 2. **Save Design Document:**
-   - Create `docs/plans/` directory if needed
-   - Save to `docs/plans/YYYY-MM-DD-<topic>-design.md`
+   - Create `.context/plans/` directory if needed
+   - Save to `.context/plans/YYYY-MM-DD-<topic>-design.md`
    - Commit the design document
 
 3. **Get User Approval:**
@@ -292,4 +292,4 @@ When saving design documents, use this structure:
 [Anything still to be decided]
 ```
 
-Save to: `docs/plans/YYYY-MM-DD-<topic>-design.md`
+Save to: `.context/plans/YYYY-MM-DD-<topic>-design.md`

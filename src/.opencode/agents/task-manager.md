@@ -181,7 +181,7 @@ Task 3: Webhook Handler (Parallel with Task 2)
 ### 📋 Master Execution Blueprint
 **Objective:** [Short Name]
 **Architecture Status:** [e.g., Clean / Requires Refactor]
-**Design Doc:** [Link to design document if exists]
+**Design Doc:** [Link to design document in .context/plans/ if exists]
 
 ---
 

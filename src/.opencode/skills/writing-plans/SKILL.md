@@ -15,7 +15,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Context:** This should be run in a dedicated worktree (created by `using-git-worktrees` skill).
 
-**Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
+**Save plans to:** `.context/plans/YYYY-MM-DD-<feature-name>.md`
 
 ## Bite-Sized Task Granularity
 
