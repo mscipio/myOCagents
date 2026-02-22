@@ -25,7 +25,7 @@ Execute plan by dispatching fresh subagent per task, with two-stage review after
 
 Before starting:
 1. **Worktree created** - Use `using-git-worktrees` skill first
-2. **Plan loaded** - Read plan from `docs/plans/YYYY-MM-DD-<feature>.md`
+2. **Plan loaded** - Read plan from `.context/plans/YYYY-MM-DD-<feature>.md`
 3. **Tests passing** - Verify clean baseline
 
 ## The Process
@@ -175,7 +175,7 @@ Provide assessment with severity:
 ```
 You: I'm using Subagent-Driven Development to execute this plan.
 
-[Read plan: docs/plans/auth-plan.md]
+[Read plan: .context/plans/auth-plan.md]
 [Extract 5 tasks with full text]
 [Create todo list]
 

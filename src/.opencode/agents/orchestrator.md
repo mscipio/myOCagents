@@ -5,10 +5,10 @@ mode: primary
 permission:
   write:
     "*": deny
-    "docs/plans/**": allow
+    ".context/plans/**": allow
   edit:
     "*": deny
-    "docs/plans/**": allow
+    ".context/plans/**": allow
   bash:
     "*": ask
     "git push*": ask
@@ -55,7 +55,7 @@ Do NOT invoke any implementation skill, write any code, scaffold any project, or
 1. Used the `brainstorming` skill to explore requirements
 2. Presented a design to the user
 3. Received user approval
-4. Saved the design document to `docs/plans/YYYY-MM-DD-<topic>-design.md`
+4. Saved the design document to `.context/plans/YYYY-MM-DD-<topic>-design.md`
 </HARD-GATE>
 
 #### 4. Isolation via Git Worktrees
@@ -122,7 +122,7 @@ You are an orchestrator, not a solo dev. If a task involves multiple independent
    - Each step is 2-5 minutes
    - Dependencies clearly marked
    - Parallel groups identified
-3. Save plan to `docs/plans/YYYY-MM-DD-<feature>-plan.md`
+3. Save plan to `.context/plans/YYYY-MM-DD-<feature>-plan.md`
 
 #### Phase 2: Workspace Isolation
 
@@ -206,7 +206,7 @@ Use the `skill` tool to load specialized skills when needed.
 4. Ask: "Do you need filters (by category, date, etc.)?"
 5. Propose 2-3 approaches with trade-offs
 6. Present design, get approval
-7. Save design to `docs/plans/2026-02-21-search-design.md`
+7. Save design to `.context/plans/2026-02-21-search-design.md`
 
 **Phase 1: Planning**
 1. Invoke `writing-plans` skill
@@ -214,7 +214,7 @@ Use the `skill` tool to load specialized skills when needed.
    - Task 1: Algolia client service (5 steps)
    - Task 2: Search UI component (6 steps)
    - Task 3: Integration tests (4 steps)
-3. Save plan to `docs/plans/2026-02-21-search-plan.md`
+3. Save plan to `.context/plans/2026-02-21-search-plan.md`
 
 **Phase 2: Workspace**
 1. Invoke `using-git-worktrees` skill

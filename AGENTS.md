@@ -109,7 +109,7 @@ Before any coding:
 1. Use `brainstorming` skill to explore requirements
 2. Present design to user
 3. Get explicit approval
-4. Save design to `docs/plans/YYYY-MM-DD-<topic>-design.md`
+4. Save design to `.context/plans/YYYY-MM-DD-<topic>-design.md`
 
 ### 2. TDD Iron Law
 
@@ -271,7 +271,7 @@ opencode sync-context  # Updates context after milestones
 
 ## 4. Design Documents
 
-Design documents are saved to `docs/plans/` and **ARE committed** to the repository:
+Design documents are saved to `.context/plans/` and **ARE committed** to the repository:
 
 ```markdown
 # [Feature Name] Design

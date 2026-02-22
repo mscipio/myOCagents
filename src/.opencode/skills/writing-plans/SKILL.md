@@ -128,7 +128,7 @@ Mark tasks that can run in parallel:
 
 After saving the plan, offer execution choice:
 
-**"Plan complete and saved to `docs/plans/<filename>.md`. Two execution options:**
+**"Plan complete and saved to `.context/plans/<filename>.md`. Two execution options:**
 
 **1. Subagent-Driven (this session)** - I dispatch fresh subagent per task, review between tasks, fast iteration
 
@@ -156,7 +156,7 @@ Before finalizing the plan:
 - [ ] Dependencies are marked
 - [ ] Parallel tasks are identified
 - [ ] Plan follows TDD (test first in each task)
-- [ ] Plan is saved to `docs/plans/`
+- [ ] Plan is saved to `.context/plans/`
 - [ ] Plan is committed to git
 
 ## Example Plan
@@ -172,7 +172,7 @@ Before finalizing the plan:
 
 **Tech Stack:** Express, bcrypt, jsonwebtoken
 
-**Design Doc:** docs/plans/2026-02-21-auth-design.md
+**Design Doc:** .context/plans/2026-02-21-auth-design.md
 
 ---
 
