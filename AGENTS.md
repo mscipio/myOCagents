@@ -6,9 +6,9 @@ This file provides guidelines for agentic coding agents operating in this reposi
 
 This is the **OpenCode Agent Suit** - a production-ready multi-agent orchestration framework for AI-driven software development. The repository contains:
 - **10 Specialized Agents**: Orchestrator, Engineer, TestEngineer, CodeReviewer, Task Manager, Guardian, Librarian, Sentinel, Technical Writer, Beagle
-- **7 Commands**: init-context, sync-context, detect-drift, generate-release, explain-context, revert-milestone, commit, push, branch
-- **4 Skills**: TokenTracker, AST-Analyzer, CoverageReporter, ParallelExec
-- **4 Lifecycle Hooks**: pre-change, post-checkout, post-sync, on-error
+- **20+ Skills**: brainstorming, tdd-workflow, systematic-debugging, writing-plans, using-git-worktrees, subagent-driven-development, finishing-a-development-branch, and more
+- **17 Commands**: init-context, sync-context, detect-drift, generate-release, explain-context, revert-milestone, commit, push, branch, and more
+- **6 Lifecycle Hooks**: pre-change, post-change, pre-commit, post-checkout, post-sync, on-error
 
 This is a **template/configuration repository** - the "code" is primarily markdown files (agents, skills, commands, hooks), not executable code.
 
@@ -21,21 +21,21 @@ The Orchestrator follows this workflow for every user request:
 ```
 User Request
      ↓
-Phase 0: Task-Manager (decompose into DAG)
+Phase 0: Brainstorming (design exploration) ← MANDATORY FIRST
      ↓
-Phase 1: Librarian (verify context)
+Phase 1: Writing Plans (granular task breakdown)
      ↓
-Phase 2: User Approval (plan)
+Phase 2: Git Worktrees (isolated workspace)
      ↓
-Phase 3: Engineer + TestEngineer (implementation)
+Phase 3: Subagent-Driven Development (implementation with TDD)
      ↓
 Phase 3b: Sentinel (security audit) ← MANDATORY
      ↓
-Phase 4: CodeReviewer (quality review)
+Phase 4: CodeReviewer (two-stage review: spec → quality)
      ↓
 Phase 5: Guardian (coverage + commit)
      ↓
-Orchestrator (git push)
+Finishing Branch (merge/PR/cleanup)
      ↓
 Librarian (sync context)
 ```
@@ -46,20 +46,100 @@ Librarian (sync context)
 |-------|------|------|---------------------|
 | **Orchestrator** | primary | Strategic lead - manages workflow, approval gates, git push & branch management | ✅ Yes |
 | **Sentinel** | primary | Security vulnerability scanning | ✅ Yes |
-| **CodeReviewer** | primary | Quality review, patterns, performance | ✅ Yes |
-| **TestEngineer** | primary | Test writing (unit, integration, e2e) | ✅ Yes |
+| **CodeReviewer** | primary | Two-stage review (spec compliance + code quality) | ✅ Yes |
+| **TestEngineer** | primary | Coverage audits, edge case testing, E2E tests | ✅ Yes |
 | **TechnicalWriter** | primary | Documentation | ✅ Yes |
 | **Beagle** | primary | Research, dependency tracing | ✅ Yes |
-| **Task-Manager** | subagent | Decompose tasks into atomic execution DAGs | ❌ Via Orchestrator |
+| **Task-Manager** | subagent | Decompose tasks into granular 2-5 min steps | ❌ Via Orchestrator |
 | **Librarian** | subagent | Context management, drift detection | ❌ Via Orchestrator |
-| **Engineer** | subagent | Code implementation with TDD | ❌ Via Orchestrator |
+| **Engineer** | subagent | Code implementation with TDD (owns full cycle) | ❌ Via Orchestrator |
 | **Guardian** | subagent | Coverage verification, commits (local only) | ❌ Via Orchestrator |
 
 ### Approval Gates
 
-1. **Plan Approval** - User must approve task decomposition before execution
-2. **Commit Approval** - User must approve final changes before Guardian commits
-3. **Push Approval** - User must approve before Orchestrator pushes to remote
+1. **Design Approval** - User must approve design before implementation begins
+2. **Plan Approval** - User must approve task decomposition before execution
+3. **Commit Approval** - User must approve final changes before Guardian commits
+4. **Push Approval** - User must approve before Orchestrator pushes to remote
+
+---
+
+## Core Skills (Workflow)
+
+### Design-First Workflow
+
+| Skill | Purpose | When to Use |
+|-------|---------|-------------|
+| `brainstorming` | Design exploration, requirements gathering | MANDATORY FIRST before any implementation |
+| `writing-plans` | Create granular implementation plans | After design approval |
+| `using-git-worktrees` | Create isolated workspace | Before implementation begins |
+| `subagent-driven-development` | Execute plans with two-stage review | During implementation |
+| `finishing-a-development-branch` | Merge/PR/cleanup workflow | After all tasks complete |
+
+### Quality Skills
+
+| Skill | Purpose | When to Use |
+|-------|---------|-------------|
+| `tdd-workflow` | Test-driven development with Iron Law | During all implementation |
+| `systematic-debugging` | 4-phase root cause investigation | When encountering bugs |
+| `code-analyzer` | Objective quality metrics | During code review |
+
+### Support Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `parallel-exec` | Dispatch multiple sub-agents simultaneously |
+| `token-tracker` | Monitor context window usage |
+| `ast-analyzer` | Parse code into AST for analysis |
+| `coverage-reporter` | Parse coverage reports |
+| `git-helper` | Common git operations |
+| `git-release` | Semantic versioning, changelog |
+
+---
+
+## Key Principles
+
+### 1. Design-First (HARD-GATE)
+
+```
+NO IMPLEMENTATION WITHOUT DESIGN APPROVAL
+```
+
+Before any coding:
+1. Use `brainstorming` skill to explore requirements
+2. Present design to user
+3. Get explicit approval
+4. Save design to `docs/plans/YYYY-MM-DD-<topic>-design.md`
+
+### 2. TDD Iron Law
+
+```
+NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
+```
+
+Write code before the test? Delete it. Start over.
+
+### 3. Two-Stage Review
+
+Every code review has two stages:
+1. **Spec Compliance**: Did we build what was requested?
+2. **Code Quality**: Is it well-built?
+
+### 4. Granular Tasks
+
+Each step is ONE action (2-5 minutes):
+- "Write the failing test" - step
+- "Run it to make sure it fails" - step
+- "Implement minimal code" - step
+- "Run tests" - step
+- "Commit" - step
+
+### 5. Workspace Isolation
+
+Use git worktrees for all feature work:
+- Prevents branch pollution
+- Enables parallel development
+- Clean test baseline verification
 
 ---
 
@@ -77,12 +157,6 @@ rm -rf .opencode
 mv .opencode_tmp .opencode
 cd .opencode && npm install
 ```
-
-### Validation (Manual Checks)
-
-- **YAML Frontmatter**: Validate YAML syntax in all agent/skill files
-- **Markdown Links**: Verify internal links point to existing files
-- **File Structure**: Ensure consistent directory layout
 
 ### Running Context Commands
 
@@ -121,51 +195,7 @@ compatibility: opencode    # For skills only
 ---
 ```
 
-**Rules:**
-- Frontmatter MUST use `---` delimiters (not `...`)
-- Fields must be lowercase
-- Boolean values use `true`/`false` (not `yes`/`no`)
-- Tools and permissions should be listed explicitly
-
-### 2.2 Markdown Structure
-
-#### File Headers
-```markdown
-# Agent: [Agent Name]
-## Role: [One-line role description]
-## Version: X.Y.Z
-## Source Inspiration: [External sources if applicable]
-
-### I. IDENTITY & MISSION
-[Detailed description]
-
----
-
-### II. ARCHITECTURAL PROTOCOLS
-[Protocol sections]
-
----
-
-### III. OPERATIONAL WORKFLOW
-[Workflow sections with phases]
-```
-
-#### Section Separators
-- Use `---` (horizontal rule) to separate major sections
-- Use `###` for subsections
-- Use `##` for major headings within files
-
-### 2.3 Naming Conventions
-
-| Component | Convention | Example |
-|-----------|------------|---------|
-| Agents | kebab-case with `-agent` suffix | `orchestrator.md`, `task-manager.md` |
-| Skills | kebab-case | `token-tracker.md`, `ast-analyzer.md` |
-| Commands | kebab-case | `init-context.md`, `sync-context.md` |
-| Hooks | kebab-case | `pre-change.md`, `post-checkout.md` |
-| Context files | kebab-case | `map.md`, `tech-stack.md`, `progress.md` |
-
-### 2.4 Directory Structure
+### 2.2 Directory Structure
 
 ```
 .opencode/
@@ -174,9 +204,11 @@ compatibility: opencode    # For skills only
 │   ├── engineer.md
 │   └── ...
 ├── skills/           # Skill definitions
-│   ├── token-tracker/
+│   ├── brainstorming/
 │   │   └── SKILL.md
-│   └── token-tracker.md
+│   ├── tdd-workflow/
+│   │   └── SKILL.md
+│   └── ...
 ├── commands/         # Command definitions
 │   └── init-context.md
 ├── hooks/            # Lifecycle hooks
@@ -184,114 +216,19 @@ compatibility: opencode    # For skills only
 └── context/         # Auto-generated (NOT committed)
     ├── map.md
     └── tech_stack.md
+
+.context/             # Project context (NOT committed)
+├── map.md
+├── tech_stack.md
+└── progress.md
+
+docs/plans/           # Design documents (committed)
+├── 2026-02-21-feature-design.md
+└── 2026-02-21-feature-plan.md
+
+.worktrees/           # Git worktrees (NOT committed)
+└── feature-branch/
 ```
-
-### 2.5 Error Handling Guidelines
-
-From the Engineer agent patterns:
-
-1. **Always use try/catch**: Every async operation must have error handling
-2. **No silent failures**: Log errors explicitly
-3. **Graceful degradation**: Provide fallback behaviors when possible
-4. **Error propagation**: Raise errors to appropriate handlers
-
-```markdown
-### Error Handling Protocol
-- **Subagent Failure:** If an Engineer fails, do not retry blindly. Request deeper analysis.
-- **Merge Conflicts:** Manually resolve in reasoning space before final output.
-- **Context Drift:** Stop all agents, inform user, run sync-context before continuing.
-```
-
-### 2.6 Type Safety
-
-When documenting type requirements:
-
-- **TypeScript**: Use strict typing, avoid `any`
-- **Python**: Use type hints, prefer `Optional[T]` over `Union[T, None]`
-- **Go**: Use explicit types, avoid `interface{}`
-
-### 2.7 Documentation Patterns
-
-#### Agent Documentation Template
-```markdown
----
-description: [What this agent does]
-mode: primary|subagent
-tools:
-  [list of allowed tools]
-permission:
-  [edit: ask|yes|no]
----
-
-# Agent: [Name]
-## Role: [Role description]
-## Version: X.Y.Z
-
-### I. IDENTITY & MISSION
-[Detailed mission statement]
-
----
-
-### II. ARCHITECTURAL PROTOCOLS
-[Protocols the agent follows]
-
----
-
-### III. OPERATIONAL WORKFLOW
-[Phase-by-phase workflow]
-
----
-
-### IV. SYSTEM CAPABILITIES & TOOL USAGE
-[Available tools and how to use them]
-
----
-
-### V. CHAIN-OF-THOUGHT EXAMPLES
-[Real-world examples showing reasoning]
-```
-
-#### Skill Documentation Template
-```markdown
----
-name: skill-name
-description: What this skill does
-compatibility: opencode
----
-
-## What I do
-- [Capability 1]
-- [Capability 2]
-
-## When to use me
-[Use case guidance]
-```
-
-### 2.8 Output Formatting
-
-When agents submit完成任务, use this structure:
-
-```markdown
-### 🛠️ Task Completion: [Task Name]
-**Scope:** [Files Modified]
-**Technical Summary:** [Brief explanation]
-**Tests Run:** [List of passing tests]
-
-#### 📝 Proposed Changes (Diff):
-```diff
---- a/file.ts
-+++ b/file.ts
-@@ -10,4 +10,5 @@
-```
-
-**Handover Note:** [Ready for audit/commit]
-```
-
-### 2.9 Version Management
-
-- Use **Semantic Versioning** (MAJOR.MINOR.PATCH)
-- Update version in file header when making breaking changes
-- Document version changes in agent descriptions
 
 ---
 
@@ -311,42 +248,42 @@ opencode sync-context  # Updates context after changes
 
 ---
 
-## 4. Key Patterns from Existing Agents
+## 4. Design Documents
 
-### Parallel Delegation
-The Orchestrator should decompose tasks into independent sub-tasks and spawn multiple Engineer subagents using parallel delegation where possible.
+Design documents are saved to `docs/plans/` and **ARE committed** to the repository:
 
-### Atomic Scope (Engineer)
-- Only modify files explicitly listed in task assignment
-- Request scope expansion if dependencies are identified
-- Avoid global side effects
+```markdown
+# [Feature Name] Design
 
-### Test-First Engineering
-- Every feature/bug fix must have corresponding tests
-- Run tests before submission to ensure no regressions
+**Date:** YYYY-MM-DD
+**Status:** Draft / Approved
 
-### Human-in-the-Loop
-- Present "Proposed Change Plan" with diff before execution
-- Wait for explicit user consent ("Yes", "Proceed", "LGTM")
-- Never silently write to source code
+## Problem Statement
+## Proposed Solution
+## Architecture
+## Alternatives Considered
+## Testing Strategy
+```
 
 ---
 
 ## 5. Git Operations
 
 - **Engineer subagents**: NO git operations allowed
-- **Orchestrator**: Handles git push, branch management (create, switch, delete)
+- **Orchestrator**: Handles git push, branch management, worktrees
 - **Guardian**: Quality audits, coverage reporting, commits (local only)
-- **Commit workflow**: Engineer → Guardian audit → Guardian commits → Orchestrator pushes
+- **Commit workflow**: Engineer → CodeReviewer → Sentinel → Guardian commits → Orchestrator pushes
 
 ---
 
 ## Summary
 
 This repository follows markdown-based conventions for agentic workflows. Key principles:
-1. **YAML frontmatter required** on all agent/skill files
-2. **Consistent section structure** with `---` separators
-3. **No `.context/` committed** - auto-generated
-4. **Strict approval gates** - no silent writes
-5. **TDD approach** - tests before implementation
-6. **Atomic, scoped changes** - isolated modifications
+
+1. **Design-first** - No implementation without design approval
+2. **TDD Iron Law** - No code without failing test first
+3. **Two-stage review** - Spec compliance then code quality
+4. **Granular tasks** - 2-5 minute steps, not 30-minute tasks
+5. **Workspace isolation** - Git worktrees for all feature work
+6. **Strict approval gates** - No silent writes
+7. **Atomic, scoped changes** - Isolated modifications
